@@ -1,0 +1,186 @@
+{
+  "_comment": "Official RavaLink egg for Pterodactyl and Pelican. Tracks the latest published GitHub Release at startup.",
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "exported_at": "2026-11-04T00:00:00+00:00",
+  "name": "RavaLink",
+  "author": "Ravalink-Project",
+  "description": "Native Rust Lavalink-compatible audio node. Downloads and runs the latest published RavaLink GitHub Release on startup.",
+  "features": null,
+  "docker_images": {
+    "ghcr.io/pterodactyl/yolks:debian": "ghcr.io/pterodactyl/yolks:debian"
+  },
+  "file_denylist": [],
+  "startup": "bash ./start.sh",
+  "config": {
+    "files": "{}",
+    "startup": "{\"done\":\"RavaLink native server starting\"}",
+    "logs": "{}",
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\nset -e\nmkdir -p /mnt/server\ncurl --fail --silent --show-error --location --retry 3 \"https://raw.githubusercontent.com/Ravalink-Project/Ravalink-eggs/main/scripts/start.sh\" --output /mnt/server/start.sh\nchmod 0755 /mnt/server/start.sh\necho \"RavaLink startup bootstrap installed.\"\necho \"The latest published release is resolved at each server start.\"\n",
+      "container": "ghcr.io/parkervcp/installers:debian",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Server Port",
+      "description": "The primary allocation port used by the RavaLink HTTP and WebSocket server.",
+      "env_variable": "RAVALINK_PORT",
+      "default_value": "2333",
+      "user_viewable": true,
+      "user_editable": false,
+      "rules": "required|integer|between:1,65535",
+      "field_type": "text",
+      "is_port": true
+    },
+    {
+      "name": "Server Address",
+      "description": "Bind address. Keep this at 0.0.0.0 inside the container.",
+      "env_variable": "RAVALINK_ADDRESS",
+      "default_value": "0.0.0.0",
+      "user_viewable": false,
+      "user_editable": false,
+      "rules": "required|string|max:64",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Node Password",
+      "description": "Set a unique random secret of at least 16 characters before starting the server.",
+      "env_variable": "RAVALINK_PASSWORD",
+      "default_value": "CHANGE_ME_REPLACE_WITH_A_RANDOM_SECRET",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|min:16|max:256",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Log Level",
+      "description": "Tracing filter: trace, debug, info, warn or error.",
+      "env_variable": "RAVALINK_LOG_LEVEL",
+      "default_value": "info",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|in:trace,debug,info,warn,error",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Player Update Interval",
+      "description": "Player state update interval in seconds.",
+      "env_variable": "RAVALINK_PLAYER_UPDATE_INTERVAL",
+      "default_value": "5",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Audio Buffer Duration",
+      "description": "Audio buffer duration in milliseconds.",
+      "env_variable": "RAVALINK_AUDIO_BUFFER_DURATION_MS",
+      "default_value": "400",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Audio Frame Buffer Duration",
+      "description": "Frame buffer duration in milliseconds.",
+      "env_variable": "RAVALINK_AUDIO_FRAME_BUFFER_DURATION_MS",
+      "default_value": "5000",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Opus Encoding Quality",
+      "description": "Opus encoder quality from 0 to 10.",
+      "env_variable": "RAVALINK_AUDIO_OPUS_ENCODING_QUALITY",
+      "default_value": "10",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|between:0,10",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Resampling Quality",
+      "description": "Audio resampling quality: low, medium or high.",
+      "env_variable": "RAVALINK_AUDIO_RESAMPLING_QUALITY",
+      "default_value": "low",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|in:low,medium,high",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Maximum Source Download Bytes",
+      "description": "Maximum compressed source size accepted by the direct-file resolver.",
+      "env_variable": "RAVALINK_AUDIO_MAX_SOURCE_DOWNLOAD_BYTES",
+      "default_value": "134217728",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Maximum Decoded Cache Bytes",
+      "description": "Maximum decoded PCM retained in the pending loadtracks cache.",
+      "env_variable": "RAVALINK_AUDIO_MAX_DECODED_CACHE_BYTES",
+      "default_value": "268435456",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Maximum Active Decoded PCM Bytes",
+      "description": "Maximum decoded PCM held by active native players.",
+      "env_variable": "RAVALINK_AUDIO_MAX_ACTIVE_DECODED_PCM_BYTES",
+      "default_value": "268435456",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Prometheus Metrics Enabled",
+      "description": "Expose the configured Prometheus metrics endpoint.",
+      "env_variable": "RAVALINK_METRICS_PROMETHEUS_ENABLED",
+      "default_value": "false",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|in:true,false",
+      "field_type": "text",
+      "is_port": false
+    },
+    {
+      "name": "Prometheus Metrics Endpoint",
+      "description": "Absolute HTTP path for Prometheus metrics.",
+      "env_variable": "RAVALINK_METRICS_PROMETHEUS_ENDPOINT",
+      "default_value": "/metrics",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:128",
+      "field_type": "text",
+      "is_port": false
+    }
+  ]
+}

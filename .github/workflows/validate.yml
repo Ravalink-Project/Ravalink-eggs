@@ -1,0 +1,22 @@
+name: Validate eggs
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate egg JSON
+        run: python3 -m json.tool egg-ravalink.json > /dev/null
+      - name: Validate startup script syntax
+        run: bash -n scripts/start.sh
+      - name: Check release asset contract
+        run: |
+          grep -q 'ravalink-linux-x86_64' scripts/start.sh
+          grep -q 'ravalink-linux-aarch64' scripts/start.sh
+          grep -q 'releases/latest' scripts/start.sh
