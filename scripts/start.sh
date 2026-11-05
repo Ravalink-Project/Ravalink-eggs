@@ -51,15 +51,15 @@ current_tag=""
 
 if [[ -x ./ravalink && "$current_tag" == "$tag" ]] \
   && printf '%s  %s\n' "$expected_hash" "./ravalink" | sha256sum --check --status; then
-  printf '[RavaLink] Release %s is already installed and checksum verified.\\n' "$tag"
+  printf '[RavaLink] Release %s is already installed and checksum verified.\n' "$tag"
 else
-  printf '[RavaLink] Installing %s (%s)...\\n' "$tag" "$asset_name"
+  printf '[RavaLink] Installing %s (%s)...\n' "$tag" "$asset_name"
   curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 1200 "$asset_url" -o "$tmp_file" || fail "Download failed for release $tag."
   [[ -s "$tmp_file" ]] || fail "GitHub returned an empty binary for release $tag."
   printf '%s  %s\n' "$expected_hash" "$tmp_file" | sha256sum --check --status || fail "SHA-256 verification failed for release $tag."
   chmod 0755 "$tmp_file"
   mv -f "$tmp_file" ./ravalink
-  printf '%s\\n' "$tag" > .ravalink-release
+  printf '%s\n' "$tag" > .ravalink-release
   printf '[RavaLink] Successfully installed and verified release %s.\n' "$tag"
 fi
 
