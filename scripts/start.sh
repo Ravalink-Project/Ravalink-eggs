@@ -39,28 +39,28 @@ tag="$(jq -er '.tag_name // empty' <<< "$release_json")" || fail "GitHub returne
 asset_url="$(jq -er --arg name "$asset_name" '[.assets[]? | select(.name == $name) | .browser_download_url][0] // empty' <<< "$release_json")" || fail "Release $tag does not contain the required asset: $asset_name."
 checksums_url="$(jq -er '[.assets[]? | select(.name == "SHA256SUMS") | .browser_download_url][0] // empty' <<< "$release_json")" || fail "Release $tag does not contain SHA256SUMS."
 
-tmp_file="./ravalink.download.$"
-tmp_checksums="./SHA256SUMS.download.$"
+tmp_file="$(mktemp ./ravalink.download.XXXXXX)"
+tmp_checksums="$(mktemp ./SHA256SUMS.download.XXXXXX)"
 trap 'rm -f "$tmp_file" "$tmp_checksums"' EXIT
 curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 120 "$checksums_url" -o "$tmp_checksums" || fail "Checksum download failed for release $tag."
-expected_hash="$(awk -v name="$asset_name" '$2 == name || $2 == "*" name { print $1; exit }' "$tmp_checksums")"
+expected_hash="$(awk -v name="$asset_name" '($2 == name || $2 == ("*" name)) { print $1; exit }' "$tmp_checksums")"
 [[ "$expected_hash" =~ ^[[:xdigit:]]{64}$ ]] || fail "SHA256SUMS does not contain a valid checksum for $asset_name."
 
 current_tag=""
 [[ ! -f .ravalink-release ]] || current_tag="$(cat .ravalink-release)"
 
 if [[ -x ./ravalink && "$current_tag" == "$tag" ]] \
-  && printf '%s  %s\\n' "$expected_hash" "./ravalink" | sha256sum --check --status; then
+  && printf '%s  %s\n' "$expected_hash" "./ravalink" | sha256sum --check --status; then
   printf '[RavaLink] Release %s is already installed and checksum verified.\\n' "$tag"
 else
   printf '[RavaLink] Installing %s (%s)...\\n' "$tag" "$asset_name"
   curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 1200 "$asset_url" -o "$tmp_file" || fail "Download failed for release $tag."
   [[ -s "$tmp_file" ]] || fail "GitHub returned an empty binary for release $tag."
-  printf '%s  %s\\n' "$expected_hash" "$tmp_file" | sha256sum --check --status || fail "SHA-256 verification failed for release $tag."
+  printf '%s  %s\n' "$expected_hash" "$tmp_file" | sha256sum --check --status || fail "SHA-256 verification failed for release $tag."
   chmod 0755 "$tmp_file"
   mv -f "$tmp_file" ./ravalink
   printf '%s\\n' "$tag" > .ravalink-release
-  printf '[RavaLink] Successfully installed and verified release %s.\\n' "$tag"
+  printf '[RavaLink] Successfully installed and verified release %s.\n' "$tag"
 fi
 
 export RAVALINK_ADDRESS="${RAVALINK_ADDRESS:-0.0.0.0}"
