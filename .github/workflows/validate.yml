@@ -19,4 +19,6 @@ jobs:
         run: |
           grep -q 'ravalink-linux-x86_64' scripts/start.sh
           grep -q 'ravalink-linux-aarch64' scripts/start.sh
-          grep -q 'releases/latest' scripts/start.sh
+          grep -q 'releases?per_page=20' scripts/start.sh
+          grep -q 'SHA256SUMS' scripts/start.sh
+          grep -q 'sha256sum --check' scripts/start.sh
