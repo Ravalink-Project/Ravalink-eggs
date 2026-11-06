@@ -17,4 +17,4 @@ jobs:
         run: |
           grep -q 'ghcr.io/ravalink-project/ravalink:latest' egg-ravalink.json
           grep -q '"startup": "ravalink"' egg-ravalink.json
-          ! grep -q '"installation"' egg-ravalink.json
+          grep -q 'already included in the selected runtime image' egg-ravalink.json
