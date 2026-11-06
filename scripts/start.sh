@@ -43,7 +43,7 @@ case "$(uname -m)" in
 esac
 
 printf '[RavaLink] Checking the latest published GitHub release...\n'
-response="$(curl --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 60 --write-out '%{http_code}__HTTP_STATUS__' -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' "$API_URL")" || fail "Could not query GitHub Releases. Check network access and GitHub API availability."
+response="$(curl --silent --show-error --location --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 60 --write-out '%{http_code}__HTTP_STATUS__' -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' "$API_URL")" || fail "Could not query GitHub Releases. Check network access and GitHub API availability."
 http_status="${response##*__HTTP_STATUS__}"
 release_json="${response%__HTTP_STATUS__*}"
 [[ "$http_status" == "200" ]] || fail "GitHub Releases returned HTTP $http_status."
@@ -58,7 +58,7 @@ checksums_url="$(jq -er '[.assets[]? | select(.name == "SHA256SUMS") | .browser_
 tmp_file="$(mktemp ./ravalink.download.XXXXXX)"
 tmp_checksums="$(mktemp ./SHA256SUMS.download.XXXXXX)"
 trap 'rm -f "$tmp_file" "$tmp_checksums"' EXIT
-curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 120 "$checksums_url" -o "$tmp_checksums" || fail "Checksum download failed for release $tag."
+curl --fail --silent --show-error --location --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 120 "$checksums_url" -o "$tmp_checksums" || fail "Checksum download failed for release $tag."
 expected_hash="$(awk -v name="$asset_name" '($2 == name || $2 == ("*" name)) { print $1; exit }' "$tmp_checksums")"
 [[ "$expected_hash" =~ ^[[:xdigit:]]{64}$ ]] || fail "SHA256SUMS does not contain a valid checksum for $asset_name."
 
@@ -70,7 +70,7 @@ if [[ -x ./ravalink && "$current_tag" == "$tag" ]] \
   printf '[RavaLink] Release %s is already installed and checksum verified.\n' "$tag"
 else
   printf '[RavaLink] Installing %s (%s)...\n' "$tag" "$asset_name"
-  curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 1200 "$asset_url" -o "$tmp_file" || fail "Download failed for release $tag."
+  curl --fail --silent --show-error --location --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 1200 "$asset_url" -o "$tmp_file" || fail "Download failed for release $tag."
   [[ -s "$tmp_file" ]] || fail "GitHub returned an empty binary for release $tag."
   printf '%s  %s\n' "$expected_hash" "$tmp_file" | sha256sum --check --status || fail "SHA-256 verification failed for release $tag."
   chmod 0755 "$tmp_file"
