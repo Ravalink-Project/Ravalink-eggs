@@ -4,13 +4,13 @@
     "version": "PTDL_v2",
     "update_url": null
   },
-  "exported_at": "2026-11-04T00:00:00+00:00",
+  "exported_at": "2026-11-06T00:00:00+0000",
   "name": "RavaLink",
   "author": "ravalink-project@users.noreply.github.com",
   "description": "Native Rust Lavalink-compatible audio node. Runs directly from the official RavaLink Docker image; no install or startup download scripts required.",
   "features": [],
   "docker_images": {
-    "RavaLink (official)": "ghcr.io/ravalink-project/ravalink:latest"
+    "ghcr.io/ravalink-project/ravalink:latest": "ghcr.io/ravalink-project/ravalink:latest"
   },
   "file_denylist": [],
   "startup": "ravalink",
@@ -161,5 +161,12 @@
       "rules": "required|string|max:128",
       "field_type": "text"
     }
-  ]
+  ],
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\n# RavaLink is already included in the selected runtime image.\n# No download or package installation is required.\nexit 0\n",
+      "container": "ghcr.io/pterodactyl/yolks:debian",
+      "entrypoint": "bash"
+    }
+  }
 }
