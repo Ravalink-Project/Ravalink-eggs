@@ -21,7 +21,7 @@ case "$(uname -m)" in
 esac
 if [[ ! -x ./jq ]]; then
   printf '[RavaLink] jq is missing; downloading the standalone parser...\\n'
-  curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 120 \
+  curl --fail --silent --show-error --location --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 120 \
     "https://github.com/jqlang/jq/releases/download/jq-1.7.1/${jq_asset}" -o ./jq \
     || fail "Could not download the standalone jq binary."
   chmod 0755 ./jq
