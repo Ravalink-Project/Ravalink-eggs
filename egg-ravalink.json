@@ -1,5 +1,5 @@
 {
-  "_comment": "Official RavaLink egg for Pterodactyl and Pelican. Tracks the latest published GitHub Release at startup.",
+  "_comment": "Official RavaLink egg for Pelican and Pterodactyl. Runs the prebuilt multi-architecture RavaLink Docker image published to GHCR.",
   "meta": {
     "version": "PTDL_v2",
     "update_url": null
@@ -7,25 +7,18 @@
   "exported_at": "2026-11-04T00:00:00+00:00",
   "name": "RavaLink",
   "author": "ravalink-project@users.noreply.github.com",
-  "description": "Native Rust Lavalink-compatible audio node. Downloads and runs the latest published RavaLink GitHub Release on startup.",
+  "description": "Native Rust Lavalink-compatible audio node. Runs directly from the official RavaLink Docker image; no install or startup download scripts required.",
   "features": [],
   "docker_images": {
-    "ghcr.io/pterodactyl/yolks:debian": "ghcr.io/pterodactyl/yolks:debian"
+    "RavaLink (official)": "ghcr.io/ravalink-project/ravalink:latest"
   },
   "file_denylist": [],
-  "startup": "bash ./start.sh",
+  "startup": "ravalink",
   "config": {
     "files": "{}",
     "startup": "{\"done\":\"RavaLink native server starting\"}",
     "logs": "{}",
     "stop": "^C"
-  },
-  "scripts": {
-    "installation": {
-      "script": "#!/bin/bash\nset -e\nmkdir -p /mnt/server\ncurl --fail --silent --show-error --location --retry 3 --retry-delay 2 -H 'Cache-Control: no-cache' \"https://raw.githubusercontent.com/Ravalink-Project/Ravalink-eggs/main/scripts/start.sh?v=1d7516658c8b513c7f974a0b9580f907deaa8429\" --output /mnt/server/start.sh\nchmod 0755 /mnt/server/start.sh\necho \"RavaLink startup bootstrap installed.\"\necho \"The latest published release is resolved at each server start.\"\n",
-      "container": "ghcr.io/parkervcp/installers:debian",
-      "entrypoint": "bash"
-    }
   },
   "variables": [
     {
