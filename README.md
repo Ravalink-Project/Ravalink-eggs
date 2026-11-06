@@ -2,7 +2,7 @@
 
 Official [Pterodactyl](https://pterodactyl.io/) and [Pelican](https://pelican.dev/) egg for the native Rust RavaLink server.
 
-The same egg JSON can be imported into either panel.
+The egg files share the same Docker image and runtime configuration, but their JSON export formats are panel-specific.
 
 ## Egg formats
 
@@ -13,7 +13,7 @@ Import the file matching your panel. Do not import the Pterodactyl JSON into Pel
 
 ## Install
 
-1. Open **Nests / Eggs** in Pelican or Pterodactyl and import `egg-ravalink.json`.
+1. In **Pelican**, import `egg-ravalink-pelican.json` (`PLCN_v3`). In **Pterodactyl**, import `egg-ravalink.json` (`PTDL_v2`).
 2. Create a server with the **RavaLink (official)** Docker image.
 3. Allocate the port configured by the egg (default: `2333`).
 4. Set a long, unique `RAVALINK_PASSWORD` before the first start.
