@@ -18,3 +18,7 @@ jobs:
           grep -q 'ghcr.io/ravalink-project/ravalink:latest' egg-ravalink.json
           grep -q '"startup": "ravalink"' egg-ravalink.json
           grep -q 'already included in the selected runtime image' egg-ravalink.json
+          python3 -m json.tool egg-ravalink-pelican.json > /dev/null
+          grep -q '"version": "PLCN_v3"' egg-ravalink-pelican.json
+          grep -q '"startup_commands"' egg-ravalink-pelican.json
+          grep -q '"rules": \[' egg-ravalink-pelican.json
