@@ -258,6 +258,20 @@
         "string",
         "max:512"
       ]
+    },
+    {
+      "sort": 17,
+      "name": "YouTube OAuth Client Secret",
+      "description": "Google OAuth client secret for YouTube Device Flow. Keep this value private.",
+      "env_variable": "RAVALINK_YOUTUBE_OAUTH_CLIENT_SECRET",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "nullable",
+        "string",
+        "max:512"
+      ]
     }
   ],
   "image": null
