@@ -6,9 +6,9 @@
   },
   "exported_at": "2026-11-04T00:00:00+00:00",
   "name": "RavaLink",
-  "author": "Ravalink-Project",
+  "author": "ravalink-project@users.noreply.github.com",
   "description": "Native Rust Lavalink-compatible audio node. Downloads and runs the latest published RavaLink GitHub Release on startup.",
-  "features": null,
+  "features": [],
   "docker_images": {
     "ghcr.io/pterodactyl/yolks:debian": "ghcr.io/pterodactyl/yolks:debian"
   },
@@ -36,8 +36,7 @@
       "user_viewable": true,
       "user_editable": false,
       "rules": "required|integer|between:1,65535",
-      "field_type": "text",
-      "is_port": true
+      "field_type": "text"
     },
     {
       "name": "Server Address",
@@ -47,8 +46,7 @@
       "user_viewable": false,
       "user_editable": false,
       "rules": "required|string|max:64",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Node Password",
@@ -58,8 +56,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|string|min:16|max:256",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Log Level",
@@ -69,8 +66,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|in:trace,debug,info,warn,error",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Player Update Interval",
@@ -80,8 +76,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|min:1",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Audio Buffer Duration",
@@ -91,8 +86,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|min:1",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Audio Frame Buffer Duration",
@@ -102,8 +96,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|min:1",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Opus Encoding Quality",
@@ -113,8 +106,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|between:0,10",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Resampling Quality",
@@ -124,8 +116,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|in:low,medium,high",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Maximum Source Download Bytes",
@@ -135,8 +126,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|min:1",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Maximum Decoded Cache Bytes",
@@ -146,8 +136,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|min:1",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Maximum Active Decoded PCM Bytes",
@@ -157,8 +146,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|integer|min:1",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Prometheus Metrics Enabled",
@@ -168,8 +156,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|in:true,false",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     },
     {
       "name": "Prometheus Metrics Endpoint",
@@ -179,8 +166,7 @@
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|string|max:128",
-      "field_type": "text",
-      "is_port": false
+      "field_type": "text"
     }
   ]
 }
