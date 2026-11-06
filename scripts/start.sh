@@ -11,7 +11,23 @@ fail() {
 }
 
 command -v curl >/dev/null 2>&1 || fail "curl is missing from the selected Docker image."
-command -v jq >/dev/null 2>&1 || fail "jq is missing from the selected Docker image."
+
+# Debian yolks do not consistently ship jq. Install a private static copy
+# in the server directory so this works without root or apt inside the container.
+case "$(uname -m)" in
+  x86_64|amd64) jq_asset="jq-linux-amd64" ;;
+  aarch64|arm64) jq_asset="jq-linux-arm64" ;;
+  *) fail "Unsupported CPU architecture: $(uname -m). Supported: x86_64 and aarch64." ;;
+esac
+if [[ ! -x ./jq ]]; then
+  printf '[RavaLink] jq is missing; downloading the standalone parser...\\n'
+  curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 120 \
+    "https://github.com/jqlang/jq/releases/download/jq-1.7.1/${jq_asset}" -o ./jq \
+    || fail "Could not download the standalone jq binary."
+  chmod 0755 ./jq
+fi
+export PATH="/home/container:$PATH"
+command -v jq >/dev/null 2>&1 || fail "jq could not be installed in the server directory."
 
 if [[ -z "${RAVALINK_PASSWORD:-}" || "${RAVALINK_PASSWORD}" == CHANGE_ME_* ]]; then
   fail "Set a unique RAVALINK_PASSWORD (at least 16 characters) in the panel before starting."
