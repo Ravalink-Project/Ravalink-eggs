@@ -4,6 +4,13 @@ Official [Pterodactyl](https://pterodactyl.io/) and [Pelican](https://pelican.de
 
 The same egg JSON can be imported into either panel.
 
+## Egg formats
+
+- **Pelican:** use [`egg-ravalink-pelican.json`](egg-ravalink-pelican.json), exported in Pelican-native `PLCN_v3` format.
+- **Pterodactyl:** use [`egg-ravalink.json`](egg-ravalink.json), exported in legacy-compatible `PTDL_v2` format.
+
+Import the file matching your panel. Do not import the Pterodactyl JSON into Pelican when the native Pelican file is available.
+
 ## Install
 
 1. Open **Nests / Eggs** in Pelican or Pterodactyl and import `egg-ravalink.json`.
