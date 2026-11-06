@@ -9,7 +9,6 @@
   "author": "ravalink-project@users.noreply.github.com",
   "uuid": "9e7b5e1d-6a2c-4d38-9c81-5f8d0a6c2b41",
   "description": "Native Rust Lavalink-compatible audio node. Runs directly from the official multi-architecture RavaLink Docker image.",
-  "icon": null,
   "tags": [
     "audio",
     "voice"
@@ -232,5 +231,6 @@
         "max:128"
       ]
     }
-  ]
+  ],
+  "image": null
 }
