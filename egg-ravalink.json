@@ -22,7 +22,7 @@
   },
   "scripts": {
     "installation": {
-      "script": "#!/bin/bash\nset -e\nmkdir -p /mnt/server\ncurl --fail --silent --show-error --location --retry 3 \"https://raw.githubusercontent.com/Ravalink-Project/Ravalink-eggs/main/scripts/start.sh\" --output /mnt/server/start.sh\nchmod 0755 /mnt/server/start.sh\necho \"RavaLink startup bootstrap installed.\"\necho \"The latest published release is resolved at each server start.\"\n",
+      "script": "#!/bin/bash\nset -e\nmkdir -p /mnt/server\ncurl --fail --silent --show-error --location --retry 3 --retry-delay 2 -H 'Cache-Control: no-cache' \"https://raw.githubusercontent.com/Ravalink-Project/Ravalink-eggs/main/scripts/start.sh?v=1d7516658c8b513c7f974a0b9580f907deaa8429\" --output /mnt/server/start.sh\nchmod 0755 /mnt/server/start.sh\necho \"RavaLink startup bootstrap installed.\"\necho \"The latest published release is resolved at each server start.\"\n",
       "container": "ghcr.io/parkervcp/installers:debian",
       "entrypoint": "bash"
     }
