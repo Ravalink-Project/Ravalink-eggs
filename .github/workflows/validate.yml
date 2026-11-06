@@ -13,12 +13,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate egg JSON
         run: python3 -m json.tool egg-ravalink.json > /dev/null
-      - name: Validate startup script syntax
-        run: bash -n scripts/start.sh
-      - name: Check release asset contract
+      - name: Validate native Docker image contract
         run: |
-          grep -q 'ravalink-linux-x86_64' scripts/start.sh
-          grep -q 'ravalink-linux-aarch64' scripts/start.sh
-          grep -q 'releases?per_page=20' scripts/start.sh
-          grep -q 'SHA256SUMS' scripts/start.sh
-          grep -q 'sha256sum --check' scripts/start.sh
+          grep -q 'ghcr.io/ravalink-project/ravalink:latest' egg-ravalink.json
+          grep -q '"startup": "ravalink"' egg-ravalink.json
+          ! grep -q '"installation"' egg-ravalink.json
