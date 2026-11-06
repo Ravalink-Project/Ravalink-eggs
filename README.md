@@ -12,7 +12,7 @@ The same egg JSON can be imported into either panel.
 4. Set a long, unique `RAVALINK_PASSWORD` before the first start.
 5. Start the server. Wings pulls the official image from GHCR automatically.
 
-No installation script, startup downloader, or runtime package bootstrap is required.
+No installation script, startup downloader, or runtime package bootstrap is required. The GHCR package must be set to **Public** so Wings can pull it without registry credentials.
 
 ## Official Docker image
 
