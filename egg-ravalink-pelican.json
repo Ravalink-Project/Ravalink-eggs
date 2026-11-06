@@ -230,6 +230,34 @@
         "string",
         "max:128"
       ]
+    },
+    {
+      "sort": 15,
+      "name": "YouTube OAuth Client ID",
+      "description": "Optional Google OAuth client ID for YouTube Device Flow. Create a client for TVs and Limited Input devices in Google Cloud Console. Leave empty to disable OAuth.",
+      "env_variable": "RAVALINK_YOUTUBE_OAUTH_CLIENT_ID",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "nullable",
+        "string",
+        "max:512"
+      ]
+    },
+    {
+      "sort": 16,
+      "name": "YouTube OAuth Token File",
+      "description": "Path used to store YouTube OAuth access and refresh tokens. Keep this file in persistent server storage.",
+      "env_variable": "RAVALINK_YOUTUBE_OAUTH_TOKEN_FILE",
+      "default_value": "/home/container/youtube-oauth-token.json",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "string",
+        "max:512"
+      ]
     }
   ],
   "image": null
