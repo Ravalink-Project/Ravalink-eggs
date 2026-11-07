@@ -42,6 +42,12 @@ The egg exposes the native RavaLink environment variables, including:
 
 RavaLink uses its built-in defaults when no TOML configuration file is supplied.
 
+### YouTube OAuth (optional)
+
+YouTube OAuth is **disabled by default**. To enable the Google device authorization flow, set `RAVALINK_YOUTUBE_OAUTH_ENABLED=true` in the egg variables and restart the server. Open the verification URL shown in the server logs (https://google.com/device) and enter the displayed code. No Google API key or custom OAuth client ID/secret is required.
+
+The egg stores the OAuth token at `/home/container/data/youtube-oauth.json` by default. This location is inside the panel's persistent server directory, so the token survives container recreation and reinstall operations that preserve server files. The image also provides `/data` for deployments that explicitly mount a persistent Docker volume there. Do not share the generated token file. An existing refresh token can optionally be supplied with `RAVALINK_YOUTUBE_OAUTH_REFRESH_TOKEN`; otherwise leave it empty and complete the device flow.
+
 ## Compatibility and support
 
 This is a deployment egg, not a claim that RavaLink is already a complete drop-in replacement for Lavalink v4. Check the main repository's compatibility notes before using it for production workloads.

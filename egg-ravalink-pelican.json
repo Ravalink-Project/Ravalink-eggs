@@ -233,24 +233,37 @@
     },
     {
       "sort": 15,
-      "name": "YouTube OAuth Client ID",
-      "description": "Optional Google OAuth client ID for YouTube Device Flow. Create a client for TVs and Limited Input devices in Google Cloud Console. Leave empty to disable OAuth.",
-      "env_variable": "RAVALINK_YOUTUBE_OAUTH_CLIENT_ID",
+      "name": "YouTube OAuth Enabled",
+      "description": "Enable YouTube TV OAuth Device Flow. When enabled without a refresh token, RavaLink prints a code; authorize it at https://google.com/device. Disabled by default.",
+      "env_variable": "RAVALINK_YOUTUBE_OAUTH_ENABLED",
+      "default_value": "false",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": [
+        "required",
+        "in:true,false"
+      ]
+    },
+    {
+      "sort": 16,
+      "name": "YouTube OAuth Refresh Token",
+      "description": "Optional existing YouTube OAuth refresh token. Leave empty to use the device flow. Treat this value as a secret.",
+      "env_variable": "RAVALINK_YOUTUBE_OAUTH_REFRESH_TOKEN",
       "default_value": "",
       "user_viewable": true,
       "user_editable": true,
       "rules": [
         "nullable",
         "string",
-        "max:512"
+        "max:4096"
       ]
     },
     {
-      "sort": 16,
+      "sort": 17,
       "name": "YouTube OAuth Token File",
-      "description": "Path used to store YouTube OAuth access and refresh tokens. Keep this file in persistent server storage.",
+      "description": "Persistent token path inside the panel server directory. Keep it under /home/container so it survives container recreation.",
       "env_variable": "RAVALINK_YOUTUBE_OAUTH_TOKEN_FILE",
-      "default_value": "/home/container/youtube-oauth-token.json",
+      "default_value": "/home/container/data/youtube-oauth.json",
       "user_viewable": true,
       "user_editable": true,
       "rules": [
@@ -260,17 +273,16 @@
       ]
     },
     {
-      "sort": 17,
-      "name": "YouTube OAuth Client Secret",
-      "description": "Google OAuth client secret for YouTube Device Flow. Keep this value private.",
-      "env_variable": "RAVALINK_YOUTUBE_OAUTH_CLIENT_SECRET",
-      "default_value": "",
+      "sort": 18,
+      "name": "YouTube OAuth Skip Initialization",
+      "description": "Skip the initial YouTube OAuth device-flow initialization. Normally leave false.",
+      "env_variable": "RAVALINK_YOUTUBE_OAUTH_SKIP_INITIALIZATION",
+      "default_value": "false",
       "user_viewable": true,
       "user_editable": true,
       "rules": [
-        "nullable",
-        "string",
-        "max:512"
+        "required",
+        "in:true,false"
       ]
     }
   ],
