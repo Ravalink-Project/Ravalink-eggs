@@ -183,9 +183,9 @@
     },
     {
       "name": "YouTube OAuth Token File",
-      "description": "Persistent path for OAuth access and refresh tokens. Keep it under /data so it survives container recreation.",
+      "description": "Persistent token path inside the panel server directory. Keep it under /home/container so it survives container recreation.",
       "env_variable": "RAVALINK_YOUTUBE_OAUTH_TOKEN_FILE",
-      "default_value": "/data/youtube-oauth.json",
+      "default_value": "/home/container/data/youtube-oauth.json",
       "user_viewable": true,
       "user_editable": true,
       "rules": "required|string|max:512",
