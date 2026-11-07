@@ -232,20 +232,6 @@
       ]
     },
     {
-      "sort": 16,
-      "name": "YouTube OAuth Token File",
-      "description": "Path used to store YouTube OAuth access and refresh tokens. Keep this file in persistent server storage.",
-      "env_variable": "RAVALINK_YOUTUBE_OAUTH_TOKEN_FILE",
-      "default_value": "/home/container/youtube-oauth-token.json",
-      "user_viewable": true,
-      "user_editable": true,
-      "rules": [
-        "required",
-        "string",
-        "max:512"
-      ]
-    },
-    {
       "sort": 15,
       "name": "YouTube OAuth Enabled",
       "description": "Enable YouTube TV OAuth Device Flow. When enabled without a refresh token, RavaLink prints a code; authorize it at https://google.com/device. Disabled by default.",
