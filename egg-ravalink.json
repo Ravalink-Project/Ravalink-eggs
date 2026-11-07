@@ -200,6 +200,16 @@
       "user_editable": true,
       "rules": "required|in:true,false",
       "field_type": "text"
+    },
+    {
+      "name": "YouTube Cookies File",
+      "description": "Optional Netscape-format cookies.txt file path inside the server. Upload the file through the panel file manager and use a secondary YouTube account. Treat it as a password; leave empty to disable.",
+      "env_variable": "RAVALINK_YOUTUBE_COOKIES_FILE",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|max:512",
+      "field_type": "text"
     }
   ],
   "scripts": {
